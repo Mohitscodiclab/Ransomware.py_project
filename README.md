@@ -1,247 +1,256 @@
-# 🛡️ Ransomware Simulation Tool for Cybersecurity Education
+# 🛡️ RansomwarePy – Cybersecurity Educational Simulator
 
-> ⚠️ **This project is strictly for educational use in a controlled lab environment.
-> It is designed to demonstrate how ransomware uses cryptography to deny access to files and to help students understand prevention, detection, and recovery techniques.
-> It must NEVER be executed on real user systems or without permission.**
+RansomwarePy is a **Python-based ransomware behaviour simulation tool** created for **cybersecurity education, malware analysis practice, and controlled lab demonstrations**.
 
----
+It showcases how real-world ransomware:
 
-## 📌 Project Overview
+* derives encryption keys
+* encrypts files
+* traverses directories
+* denies data access
 
-This project is a **Python-based ransomware behaviour simulator** that demonstrates:
-
-* How files are encrypted using strong cryptographic primitives
-* How attackers derive encryption keys from passwords
-* How entire directories are targeted
-* How a ransom note is dropped after encryption
-
-The goal is **cybersecurity awareness and defensive learning**, not real-world misuse.
+> ⚠️ **This project is strictly for educational and research purposes.
+> Do NOT run it on real systems or without explicit permission.**
 
 ---
 
-## 🎯 Learning Objectives
+## 🎯 Project Objectives
 
-* Understand real-world ransomware workflow
-* Learn secure key derivation using **Scrypt**
-* Implement **AES-256 encryption**
-* Study file system traversal techniques
-* Learn the importance of:
+This project helps students and researchers understand:
 
-  * backups
-  * access control
-  * endpoint protection
-  * incident response
+* How ransomware encrypts files using strong cryptography
+* Why password strength and key derivation matter
+* How attackers automate file discovery
+* The importance of backup and recovery strategies
+* Incident response and defensive security concepts
 
 ---
 
-## 🧠 Concepts Demonstrated
+## ✨ Features
 
-### 1. Key Derivation – Scrypt
-
-```python
-Scrypt(
-    salt=salt,
-    length=32,
-    n=2**14,
-    r=8,
-    p=1
-)
-```
-
-Scrypt is used to:
-
-* Convert a password into a **secure 256-bit key**
-* Resist brute-force attacks
-* Add randomness using a **salt**
+* 🔐 **AES-256 File Encryption**
+* 🧂 **Scrypt Key Derivation with Salt**
+* 📁 **Recursive Directory Processing**
+* 🧾 **Ransom Note Simulation (HTML)**
+* 🔓 **Recovery / Decryption Module**
+* ⚙️ **Cross-Platform Target Detection (Windows/Linux)**
+* 🎓 Designed for **Cybersecurity Lab Demonstration**
 
 ---
 
-### 2. AES Encryption (CBC Mode)
+## 🧠 Cryptographic Concepts Used
 
-The project uses:
+### Key Derivation – Scrypt
 
-* AES-256
-* Random IV for each file
-* PKCS7 padding
+Used to securely convert a password into a 256-bit encryption key.
 
-Workflow:
+* Resistant to brute-force attacks
+* Uses random salt
+* Memory-hard function
+
+### AES-256 (CBC Mode)
+
+Encryption workflow:
 
 ```
-File → Read → Pad → Encrypt → Save as .enc → Delete original
+Original File → Padding → AES Encryption → .enc File → Original Removed
 ```
 
----
+Stored format:
 
-### 3. File System Traversal
-
-```python
-os.walk()
+```
+[salt][IV][ciphertext]
 ```
 
-Used to:
-
-* Recursively locate all files in a directory
-* Process them automatically
-
----
-
-### 4. Ransom Note Generation
-
-After encryption, an HTML file is created to simulate attacker communication.
-
-This demonstrates **social engineering tactics** used in real ransomware attacks.
+This allows the decryption module to regenerate the correct key.
 
 ---
 
 ## 🏗️ Project Structure
 
 ```
-project/
-│── ransomware_simulator.py
-│── README.md
+RansomwarePy/
+│── ransomware.py          # Encryption module
+│── decrypt.py             # Recovery / decryption module
+│── requirements.txt       # Dependencies
+│── README.md              # Project documentation
+│── LICENSE
 ```
-
----
-
-## ⚙️ How It Works
-
-1. Detects operating system
-2. Selects target directory
-3. Reads each file
-4. Encrypts file using AES
-5. Deletes original file
-6. Saves encrypted version
-7. Drops ransom note
 
 ---
 
 ## 💻 Requirements
 
-* Python 3.8+
-* cryptography library
+* Python 3.x
+* cryptography
 
 Install dependencies:
 
 ```bash
-pip install cryptography
+pip install -r requirements.txt
 ```
 
 ---
 
-## 🚀 Running the Project
+## ⚙️ Installation
 
-### 🔬 SAFE LAB USAGE ONLY
+### 1️⃣ Clone the Repository
 
-Create a test folder with dummy files:
+```bash
+git clone https://github.com/MOHITSCODICLAB/RansomwarePy.git
+```
+
+### 2️⃣ Navigate into the Project
+
+```bash
+cd RansomwarePy
+```
+
+### 3️⃣ Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## 🚀 Usage (Lab Environment Only)
+
+### 🔐 Encrypt Files
+
+```bash
+python ransomware.py --target /path/to/test_directory --key your_password
+```
+
+### 🔓 Decrypt / Recover Files
+
+```bash
+python decrypt.py --target /path/to/test_directory --key your_password
+```
+
+---
+
+## 🔬 Safe Testing Procedure
+
+1. Create a dummy folder:
 
 ```bash
 mkdir test_lab
 ```
 
-Run:
+2. Add sample files (images, txt, pdf)
 
-```bash
-python ransomware_simulator.py
-```
+3. Run the script on **this folder only**
 
----
-
-## 🔐 Decryption (For Educational Extension)
-
-Students can implement:
-
-* Password verification
-* Key regeneration using stored salt
-* File restoration
-
-This demonstrates **incident recovery techniques**.
+This prevents accidental data loss.
 
 ---
 
-## 🛡️ Defensive Lessons
+## 🛡️ Defensive Cybersecurity Learning Outcomes
 
-This simulation helps understand how to defend against ransomware:
+This project demonstrates why the following are critical:
 
 ### Prevention
 
 * Regular offline backups
-* Least-privilege access
-* Email filtering
+* Least privilege access
+* Email attachment filtering
 * Application whitelisting
 
 ### Detection
 
 * Monitoring mass file modifications
-* Detecting unknown encryption processes
-* EDR/XDR solutions
+* Identifying unknown encryption processes
+* EDR/XDR alerting
 
 ### Response
 
-* Isolate infected machine
-* Restore from backups
-* Perform forensic analysis
+* System isolation
+* Restoration from backup
+* Forensic investigation
 
 ---
 
-## ⚠️ Ethical Use Policy
+## 📚 Academic Value
 
-This project:
+This project showcases:
 
-✅ Is for education
-✅ Is for malware analysis labs
-✅ Is for cybersecurity training
-
-❌ Must not be used on real systems
-❌ Must not be used for extortion
-❌ Must not be deployed without permission
-
----
-
-## 🎓 Academic Value
-
-This project demonstrates:
-
-* Applied cryptography
-* Secure programming
-* Operating system interaction
-* Cyber attack lifecycle understanding
+* Applied Cryptography
+* Secure Programming
+* OS File System Interaction
+* Malware Behaviour Simulation
+* Incident Recovery Techniques
 
 Perfect for:
 
-* Polytechnic major projects
-* Cybersecurity portfolios
-* Malware analysis learning
+* Polytechnic Major Project
+* Cybersecurity Portfolio
+* Viva / Practical Demonstration
+* Malware Analysis Learning
 
 ---
 
 ## 🔮 Future Enhancements (Defensive Focus)
 
-* File integrity monitor
-* Ransomware detection engine
-* Backup & auto-restore system
-* Real-time encryption alert system
-* GUI for awareness training
+* GUI awareness simulator
+* Real-time ransomware detection module
+* File integrity monitoring system
+* Backup & auto-restore engine
+* AES-GCM authenticated encryption upgrade
+* Logging & forensic analysis dashboard
+
+---
+
+## ⚖️ Legal & Ethical Disclaimer
+
+This tool is developed **strictly for educational and authorized lab use**.
+
+❌ Do NOT deploy on real systems
+❌ Do NOT use for extortion or unauthorized access
+❌ Do NOT test without permission
+
+Unauthorized use may violate cybercrime laws.
+
+The author is not responsible for misuse.
 
 ---
 
 ## 👨‍💻 Author
 
 **Mohit Kumar**
-🔗 GitHub: [https://github.com/MOHITSCODICLAB](https://github.com/MOHITSCODICLAB)
+🎓 Polytechnic Student | Aspiring Cybersecurity Specialist
 
-☕ Support: [https://buymeacoffee.com/MOHITSCODICLAB](https://buymeacoffee.com/MOHITSCODICLAB)
+🔗 GitHub: [https://github.com/MOHITSCODICLAB](https://github.com/MOHITSCODICLAB)
+☕ Buy Me a Coffee: [https://buymeacoffee.com/MOHITSCODICLAB](https://buymeacoffee.com/MOHITSCODICLAB)
+
+---
+
+## 📖 References
+
+* Wikipedia – Ransomware
+* Federal Bureau of Investigation – Ransomware Guidance
+* National Cyber Security Centre – Ransomware Overview
 
 ---
 
 ## 📜 License
 
-This project is released for **educational and research purposes only**.
+This project is licensed under the **MIT License**.
+See the `LICENSE` file for details.
 
 ---
 
-# ⭐ If you are a cybersecurity student
+# ⭐ For Cybersecurity Students
 
-This project is meant to teach one core truth:
+Understanding how ransomware works is the first step toward:
 
-> Understanding how attacks work is the first step to building strong defenses.
+* building detection systems
+* designing defenses
+* performing malware analysis
+* protecting real infrastructure
 
+---
+
+## 🧾 Suggested Resume Description
+
+> Developed a Python-based ransomware behaviour simulator using AES-256 and Scrypt to demonstrate file encryption, key derivation, and incident recovery in a controlled lab environment for cybersecurity education.
