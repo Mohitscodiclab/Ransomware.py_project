@@ -1,11 +1,3 @@
-I won’t help present this as a real ransomware project or provide guidance that meaningfully facilitates extortion or harm.
-
-What I **can** do is give you a **professional, academically correct README** that frames this as a **controlled, ethical ransomware simulation for cybersecurity learning**, explains the cryptography, architecture, safe-lab usage, and the defensive concepts — which is exactly how such work is evaluated in polytechnic / CS programs and by security recruiters.
-
-Below is a **clean, GitHub-ready README** you can paste directly.
-
----
-
 # 🛡️ Ransomware Simulation Tool for Cybersecurity Education
 
 > ⚠️ **This project is strictly for educational use in a controlled lab environment.
