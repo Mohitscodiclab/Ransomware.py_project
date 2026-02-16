@@ -97,7 +97,7 @@ pip install -r requirements.txt
 ### 1️⃣ Clone the Repository
 
 ```bash
-git clone https://github.com/MOHITSCODICLAB/RansomwarePy.git
+git clone https://github.com/Mohitscodiclab/Ransomware.py_project.git
 ```
 
 ### 2️⃣ Navigate into the Project
